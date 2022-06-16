@@ -4,7 +4,37 @@ const FULL_HEART = '♥'
 
 // Your JavaScript code goes here!
 
+document.addEventListener("DOMContentLoaded", ()=>{
 
+
+
+  let hearts= document.querySelectorAll("span.like-glyph")
+
+  hearts.forEach(hearts=> hearts.addEventListener("click", likeCallback));
+  
+  function likeCallback(hearts){  
+    console.log(hearts.target)
+    mimicServerCall()
+   .then(()=>{
+    if(hearts.target.innerText === EMPTY_HEART){
+      hearts.target.classList.add('activated-heart')
+      hearts.target.innerText = FULL_HEART
+    }
+    else{
+      hearts.target.classList.remove('activated-heart')
+      hearts.target.innerText = EMPTY_HEART
+    }
+   })
+   .catch(()=>{
+      let errorModal= document.getElementById("modal")
+      console.log(errorModal)
+      errorModal.classList.remove("hidden")
+
+      setTimeout(()=>{errorModal.className="hidden"}, 3000)
+    })
+  }
+  
+})
 
 
 //------------------------------------------------------------------------------
